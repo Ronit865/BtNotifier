@@ -1,0 +1,44 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <UseWindowsForms>true</UseWindowsForms>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>BtNotifier</AssemblyName>
+    <RootNamespace>BtNotifier</RootNamespace>
+
+    <AssemblyTitle>Bluetooth Notifier</AssemblyTitle>
+    <Product>Bluetooth Notifier</Product>
+    <Version>1.2.0</Version>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+
+    <!-- Memory and startup -->
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <ConcurrentGarbageCollection>false</ConcurrentGarbageCollection>   <!-- no background GC thread -->
+    <ServerGarbageCollector>false</ServerGarbageCollector>
+    <TieredPGO>false</TieredPGO>                                       <!-- no profiling instrumentation -->
+    <JsonSerializerIsReflectionEnabledByDefault>false</JsonSerializerIsReflectionEnabledByDefault>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <DebugType>none</DebugType>
+    <PublishReadyToRun>true</PublishReadyToRun>                        <!-- precompiled code: less JIT memory, faster start -->
+    <EnableCompressionInSingleFile>false</EnableCompressionInSingleFile> <!-- compressed bundles are unpacked into RAM at startup -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Ask the GC to favour a small heap over speed -->
+    <RuntimeHostConfigurationOption Include="System.GC.ConserveMemory" Value="7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- The Windows API projection is huge (~18 MB) and we only use a few types: leave it to the JIT instead of bloating the exe -->
+    <PublishReadyToRunExclude Include="Microsoft.Windows.SDK.NET.dll" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="logo.png" LogicalName="logo.png" />
+  </ItemGroup>
+
+</Project>
